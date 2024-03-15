@@ -5,7 +5,7 @@ import 'package:aws_flutter/introduction_animation/components/relax_view.dart';
 import 'package:aws_flutter/introduction_animation/components/splash_view.dart';
 import 'package:aws_flutter/introduction_animation/components/top_back_skip_view.dart';
 import 'package:aws_flutter/introduction_animation/components/welcome_view.dart';
-import 'package:aws_flutter/login_screen.dart';
+import 'package:aws_flutter/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 class IntroductionAnimationScreen extends StatefulWidget {
@@ -115,7 +115,7 @@ class _IntroductionAnimationScreenState
   void _signUpClick() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => LoginScreen()),
+      MaterialPageRoute(builder: (context) => SignUpScreen()),
     );
   }
 }
