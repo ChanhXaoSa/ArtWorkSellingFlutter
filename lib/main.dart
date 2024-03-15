@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:aws_flutter/app_theme.dart';
+import 'package:aws_flutter/login_screen.dart';
 import 'package:aws_flutter/navigation_home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
+      // home: NavigationHomeScreen(),
       home: NavigationHomeScreen(),
     );
   }
