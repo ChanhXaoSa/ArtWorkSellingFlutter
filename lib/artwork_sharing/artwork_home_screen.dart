@@ -1,6 +1,10 @@
+import 'dart:ffi';
+
+import 'package:aws_flutter/api/base_client.dart';
 import 'package:aws_flutter/hotel_booking/calendar_popup_view.dart';
 import 'package:aws_flutter/hotel_booking/hotel_list_view.dart';
 import 'package:aws_flutter/hotel_booking/model/hotel_list_data.dart';
+import 'package:aws_flutter/model/art_work.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -23,11 +27,22 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
 
+  late Future<List<ArtWork>> futureArtWork;
+  late List<ArtWork> listArtWork = [];
+
   @override
   void initState() {
+    initializedData();
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
+  }
+
+  Future<void> initializedData() async {
+    futureArtWork = BaseClient().fetchArtWorks();
+    await futureArtWork.then((value) => setState(() {
+      listArtWork = value.toList();
+    }));
   }
 
   Future<bool> getData() async {
@@ -422,12 +437,12 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
             const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 4),
             child: Row(
               children: <Widget>[
-                const Expanded(
+                Expanded(
                   child: Padding(
-                    padding: EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '530 hotels found',
-                      style: TextStyle(
+                      '${listArtWork.length.toInt()} hotels found',
+                      style: const TextStyle(
                         fontWeight: FontWeight.w100,
                         fontSize: 16,
                       ),

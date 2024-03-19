@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:aws_flutter/app_theme.dart';
 import 'package:aws_flutter/artwork_sharing/artwork_home_screen.dart';
-import 'package:aws_flutter/login_screen.dart';
+import 'package:aws_flutter/navigation_home_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         platform: TargetPlatform.iOS,
       ),
       // home: NavigationHomeScreen(),
-      home: const ArtWorkHomeScreen(),
+      home: ArtWorkHomeScreen(),
     );
   }
 }
