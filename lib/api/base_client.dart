@@ -20,4 +20,15 @@ class BaseClient {
       throw Exception('Failed to load data');
     }
   }
+  Future<ArtWork> fetchArtWorkById(String id) async {
+    var response =
+    await http.get(
+        Uri.parse('http://aws-prn.somee.com/api/ArtWork/GetById?id=${id}')
+    );
+    if(response.statusCode == 200) {
+      return ArtWork.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
 }

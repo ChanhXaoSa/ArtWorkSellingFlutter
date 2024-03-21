@@ -1,10 +1,14 @@
 import 'dart:ffi';
 
 import 'package:aws_flutter/api/base_client.dart';
+import 'package:aws_flutter/artwork_sharing/artwork_info_screen.dart';
+import 'package:aws_flutter/artwork_sharing/artwork_list_view.dart';
+import 'package:aws_flutter/design_course/course_info_screen.dart';
 import 'package:aws_flutter/hotel_booking/calendar_popup_view.dart';
 import 'package:aws_flutter/hotel_booking/hotel_list_view.dart';
 import 'package:aws_flutter/hotel_booking/model/hotel_list_data.dart';
 import 'package:aws_flutter/model/art_work.dart';
+import 'package:aws_flutter/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -104,12 +108,12 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                         color:
                         HotelAppTheme.buildLightTheme().colorScheme.background,
                         child: ListView.builder(
-                          itemCount: hotelList.length,
+                          itemCount: listArtWork.length,
                           padding: const EdgeInsets.only(top: 8),
                           scrollDirection: Axis.vertical,
                           itemBuilder: (BuildContext context, int index) {
                             final int count =
-                            hotelList.length > 10 ? 10 : hotelList.length;
+                            listArtWork.length > 10 ? 10 : listArtWork.length;
                             final Animation<double> animation =
                             Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
@@ -118,9 +122,15 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                                         (1 / count) * index, 1.0,
                                         curve: Curves.fastOutSlowIn)));
                             animationController?.forward();
-                            return HotelListView(
-                              callback: () {},
-                              hotelData: hotelList[index],
+                            return ArtWorkListView(
+                              callback: () {
+                                Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) =>
+                                      ArtWorkInfoScreen(artWorkId: listArtWork[index].id),
+                                  ),
+                                );
+                              },
+                              artWorkData: listArtWork[index],
                               animation: animation,
                               animationController: animationController!,
                             );
@@ -160,11 +170,11 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                   return const SizedBox();
                 } else {
                   return ListView.builder(
-                    itemCount: hotelList.length,
+                    itemCount: listArtWork.length,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int index) {
                       final int count =
-                      hotelList.length > 10 ? 10 : hotelList.length;
+                      listArtWork.length > 10 ? 10 : listArtWork.length;
                       final Animation<double> animation =
                       Tween<double>(begin: 0.0, end: 1.0).animate(
                           CurvedAnimation(
@@ -173,9 +183,9 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                                   curve: Curves.fastOutSlowIn)));
                       animationController?.forward();
 
-                      return HotelListView(
+                      return ArtWorkListView(
                         callback: () {},
-                        hotelData: hotelList[index],
+                        artWorkData: listArtWork[index],
                         animation: animation,
                         animationController: animationController!,
                       );
@@ -190,10 +200,10 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
     );
   }
 
-  Widget getHotelViewList() {
-    final List<Widget> hotelListViews = <Widget>[];
-    for (int i = 0; i < hotelList.length; i++) {
-      final int count = hotelList.length;
+  Widget getArtWorkViewList() {
+    final List<Widget> artWorkListViews = <Widget>[];
+    for (int i = 0; i < listArtWork.length; i++) {
+      final int count = listArtWork.length;
       final Animation<double> animation =
       Tween<double>(begin: 0.0, end: 1.0).animate(
         CurvedAnimation(
@@ -201,10 +211,10 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
           curve: Interval((1 / count) * i, 1.0, curve: Curves.fastOutSlowIn),
         ),
       );
-      hotelListViews.add(
-        HotelListView(
+      artWorkListViews.add(
+        ArtWorkListView(
           callback: () {},
-          hotelData: hotelList[i],
+          artWorkData: listArtWork[i],
           animation: animation,
           animationController: animationController!,
         ),
@@ -212,7 +222,7 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
     }
     animationController?.forward();
     return Column(
-      children: hotelListViews,
+      children: artWorkListViews,
     );
   }
 
@@ -592,19 +602,19 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                   //     ),
                   //   ),
                   // ),
-                  // Material(
-                  //   color: Colors.transparent,
-                  //   child: InkWell(
-                  //     borderRadius: const BorderRadius.all(
-                  //       Radius.circular(32.0),
-                  //     ),
-                  //     onTap: () {},
-                  //     child: const Padding(
-                  //       padding: EdgeInsets.all(8.0),
-                  //       child: Icon(FontAwesomeIcons.locationDot),
-                  //     ),
-                  //   ),
-                  // ),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(32.0),
+                      ),
+                      onTap: () {},
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(FontAwesomeIcons.solidUser),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )
