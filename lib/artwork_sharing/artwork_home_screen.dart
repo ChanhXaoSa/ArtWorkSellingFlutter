@@ -441,7 +441,7 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '${listArtWork.length.toInt()} hotels found',
+                      '${listArtWork.length} hotels found',
                       style: const TextStyle(
                         fontWeight: FontWeight.w100,
                         fontSize: 16,
@@ -579,32 +579,32 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                      onTap: () {},
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(Icons.favorite_border),
-                      ),
-                    ),
-                  ),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                      onTap: () {},
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(FontAwesomeIcons.locationDot),
-                      ),
-                    ),
-                  ),
+                  // Material(
+                  //   color: Colors.transparent,
+                  //   child: InkWell(
+                  //     borderRadius: const BorderRadius.all(
+                  //       Radius.circular(32.0),
+                  //     ),
+                  //     onTap: () {},
+                  //     child: const Padding(
+                  //       padding: EdgeInsets.all(8.0),
+                  //       child: Icon(Icons.favorite_border),
+                  //     ),
+                  //   ),
+                  // ),
+                  // Material(
+                  //   color: Colors.transparent,
+                  //   child: InkWell(
+                  //     borderRadius: const BorderRadius.all(
+                  //       Radius.circular(32.0),
+                  //     ),
+                  //     onTap: () {},
+                  //     child: const Padding(
+                  //       padding: EdgeInsets.all(8.0),
+                  //       child: Icon(FontAwesomeIcons.locationDot),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             )

@@ -11,7 +11,7 @@ class BaseClient {
   Future<List<ArtWork>> fetchArtWorks() async {
     var response =
         await http.get(
-          Uri.parse('http://127.0.0.1:5211/api/ArtWork/GetAll')
+          Uri.parse('http://aws-prn.somee.com/api/ArtWork/GetAll')
         );
     if(response.statusCode == 200) {
       final List result = json.decode(response.body);
