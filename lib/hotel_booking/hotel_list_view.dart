@@ -7,12 +7,11 @@ import 'model/hotel_list_data.dart';
 
 class HotelListView extends StatelessWidget {
   const HotelListView(
-      {Key? key,
+      {super.key,
       this.hotelData,
       this.animationController,
       this.animation,
-      this.callback})
-      : super(key: key);
+      this.callback});
 
   final VoidCallback? callback;
   final HotelListData? hotelData;
@@ -61,7 +60,7 @@ class HotelListView extends StatelessWidget {
                             ),
                             Container(
                               color: HotelAppTheme.buildLightTheme()
-                                  .backgroundColor,
+                                  .colorScheme.background,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,7 +79,7 @@ class HotelListView extends StatelessWidget {
                                             Text(
                                               hotelData!.titleTxt,
                                               textAlign: TextAlign.left,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 22,
                                               ),
@@ -187,7 +186,7 @@ class HotelListView extends StatelessWidget {
                                         Text(
                                           '\$${hotelData!.perNight}',
                                           textAlign: TextAlign.left,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 22,
                                           ),

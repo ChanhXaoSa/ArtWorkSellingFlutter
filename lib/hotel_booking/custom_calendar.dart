@@ -4,13 +4,12 @@ import 'package:intl/intl.dart';
 
 class CustomCalendarView extends StatefulWidget {
   const CustomCalendarView(
-      {Key? key,
+      {super.key,
       this.initialStartDate,
       this.initialEndDate,
       this.startEndDateChange,
       this.minimumDate,
-      this.maximumDate})
-      : super(key: key);
+      this.maximumDate});
 
   final DateTime? minimumDate;
   final DateTime? maximumDate;
@@ -98,7 +97,7 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                             setListOfDate(currentMonthDate);
                           });
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.keyboard_arrow_left,
                           color: Colors.grey,
                         ),
@@ -110,7 +109,7 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                   child: Center(
                     child: Text(
                       DateFormat('MMMM, yyyy').format(currentMonthDate),
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.w500,
                           fontSize: 20,
                           color: Colors.black),
@@ -141,7 +140,7 @@ class _CustomCalendarViewState extends State<CustomCalendarView> {
                             setListOfDate(currentMonthDate);
                           });
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.keyboard_arrow_right,
                           color: Colors.grey,
                         ),

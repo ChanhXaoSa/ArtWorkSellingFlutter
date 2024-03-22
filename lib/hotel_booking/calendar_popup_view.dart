@@ -6,15 +6,14 @@ import 'custom_calendar.dart';
 
 class CalendarPopupView extends StatefulWidget {
   const CalendarPopupView(
-      {Key? key,
+      {super.key,
       this.initialStartDate,
       this.initialEndDate,
       this.onApplyClick,
       this.onCancelClick,
       this.barrierDismissible = true,
       this.minimumDate,
-      this.maximumDate})
-      : super(key: key);
+      this.maximumDate});
 
   final DateTime? minimumDate;
   final DateTime? maximumDate;
@@ -80,7 +79,7 @@ class _CalendarPopupViewState extends State<CalendarPopupView>
                     padding: const EdgeInsets.all(24.0),
                     child: Container(
                       decoration: BoxDecoration(
-                        color: HotelAppTheme.buildLightTheme().backgroundColor,
+                        color: HotelAppTheme.buildLightTheme().colorScheme.background,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(24.0)),
                         boxShadow: <BoxShadow>[
@@ -124,7 +123,7 @@ class _CalendarPopupViewState extends State<CalendarPopupView>
                                             ? DateFormat('EEE, dd MMM')
                                                 .format(startDate!)
                                             : '--/-- ',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 16,
                                         ),
@@ -160,7 +159,7 @@ class _CalendarPopupViewState extends State<CalendarPopupView>
                                             ? DateFormat('EEE, dd MMM')
                                                 .format(endDate!)
                                             : '--/-- ',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
@@ -218,7 +217,7 @@ class _CalendarPopupViewState extends State<CalendarPopupView>
                                         Navigator.pop(context);
                                       } catch (_) {}
                                     },
-                                    child: Center(
+                                    child: const Center(
                                       child: Text(
                                         'Apply',
                                         style: TextStyle(

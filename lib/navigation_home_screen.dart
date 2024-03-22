@@ -8,6 +8,8 @@ import 'package:aws_flutter/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
+  const NavigationHomeScreen({super.key});
+
   @override
   _NavigationHomeScreenState createState() => _NavigationHomeScreenState();
 }
@@ -58,17 +60,17 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Help:
           setState(() {
-            screenView = HelpScreen();
+            screenView = const HelpScreen();
           });
           break;
         case DrawerIndex.FeedBack:
           setState(() {
-            screenView = FeedbackScreen();
+            screenView = const FeedbackScreen();
           });
           break;
         case DrawerIndex.Invite:
           setState(() {
-            screenView = InviteFriend();
+            screenView = const InviteFriend();
           });
           break;
         default:

@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
         platform: TargetPlatform.iOS,
       ),
       // home: NavigationHomeScreen(),
-      home: ArtWorkHomeScreen(),
+      home: const ArtWorkHomeScreen(),
     );
   }
 }

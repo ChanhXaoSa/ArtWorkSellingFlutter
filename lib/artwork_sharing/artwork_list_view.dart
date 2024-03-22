@@ -1,17 +1,14 @@
 import 'package:aws_flutter/hotel_booking/hotel_app_theme.dart';
 import 'package:aws_flutter/model/art_work.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ArtWorkListView extends StatelessWidget {
   const ArtWorkListView(
-      {Key? key,
+      {super.key,
         this.artWorkData,
         this.animationController,
         this.animation,
-        this.callback})
-      : super(key: key);
+        this.callback});
 
   final VoidCallback? callback;
   final ArtWork? artWorkData;
@@ -60,7 +57,7 @@ class ArtWorkListView extends StatelessWidget {
                             ),
                             Container(
                               color: HotelAppTheme.buildLightTheme()
-                                  .backgroundColor,
+                                  .colorScheme.background,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +76,7 @@ class ArtWorkListView extends StatelessWidget {
                                             Text(
                                               artWorkData!.name,
                                               textAlign: TextAlign.left,
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                 fontWeight: FontWeight.w600,
                                                 fontSize: 22,
                                               ),
@@ -120,9 +117,9 @@ class ArtWorkListView extends StatelessWidget {
                                                 // ),
                                               ],
                                             ),
-                                            Padding(
+                                            const Padding(
                                               padding:
-                                              const EdgeInsets.only(top: 4),
+                                              EdgeInsets.only(top: 4),
                                               child: Row(
                                                 children: <Widget>[
                                                   // RatingBar(
@@ -186,7 +183,7 @@ class ArtWorkListView extends StatelessWidget {
                                         Text(
                                           '\$${artWorkData!.price}',
                                           textAlign: TextAlign.left,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 22,
                                           ),

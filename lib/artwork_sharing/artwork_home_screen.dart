@@ -1,14 +1,10 @@
-import 'dart:ffi';
 
 import 'package:aws_flutter/api/base_client.dart';
 import 'package:aws_flutter/artwork_sharing/artwork_info_screen.dart';
 import 'package:aws_flutter/artwork_sharing/artwork_list_view.dart';
-import 'package:aws_flutter/design_course/course_info_screen.dart';
 import 'package:aws_flutter/hotel_booking/calendar_popup_view.dart';
-import 'package:aws_flutter/hotel_booking/hotel_list_view.dart';
 import 'package:aws_flutter/hotel_booking/model/hotel_list_data.dart';
 import 'package:aws_flutter/model/art_work.dart';
-import 'package:aws_flutter/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -474,7 +470,7 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                       Navigator.push<dynamic>(
                         context,
                         MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => FiltersScreen(),
+                            builder: (BuildContext context) => const FiltersScreen(),
                             fullscreenDialog: true),
                       );
                     },

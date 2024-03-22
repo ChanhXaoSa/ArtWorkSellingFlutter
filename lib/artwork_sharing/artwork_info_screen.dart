@@ -6,7 +6,7 @@ import 'design_artwork_app_theme.dart';
 class ArtWorkInfoScreen extends StatefulWidget {
   final String artWorkId;
 
-  const ArtWorkInfoScreen({required this.artWorkId});
+  const ArtWorkInfoScreen({super.key, required this.artWorkId});
 
   @override
   _ArtWorkInfoScreenState createState() => _ArtWorkInfoScreenState();
@@ -29,7 +29,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
         duration: const Duration(milliseconds: 1000), vsync: this);
     animation = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
         parent: animationController!,
-        curve: Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
+        curve: const Interval(0, 1.0, curve: Curves.fastOutSlowIn)));
     setData();
     super.initState();
   }
@@ -108,9 +108,9 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                             padding: const EdgeInsets.only(
                                 top: 32.0, left: 18, right: 16),
                             child: Text(
-                              '${artWork.name}',
+                              artWork.name,
                               textAlign: TextAlign.left,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 fontSize: 22,
                                 letterSpacing: 0.27,
@@ -128,7 +128,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                 Text(
                                   '\$${artWork.price}',
                                   textAlign: TextAlign.left,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w200,
                                     fontSize: 22,
                                     letterSpacing: 0.27,
@@ -181,9 +181,9 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                 padding: const EdgeInsets.only(
                                     left: 16, right: 16, top: 8, bottom: 8),
                                 child: Text(
-                                  '${artWork.description}',
+                                  artWork.description,
                                   textAlign: TextAlign.justify,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w200,
                                     fontSize: 14,
                                     letterSpacing: 0.27,
@@ -245,7 +245,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                               blurRadius: 10.0),
                                         ],
                                       ),
-                                      child: Center(
+                                      child: const Center(
                                         child: Text(
                                           'Buy Art Work',
                                           textAlign: TextAlign.left,
@@ -310,7 +310,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                   child: InkWell(
                     borderRadius:
                     BorderRadius.circular(AppBar().preferredSize.height),
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_back_ios,
                       color: DesignArtWorkAppTheme.nearlyBlack,
                     ),
@@ -351,7 +351,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
               Text(
                 text1,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14,
                   letterSpacing: 0.27,
@@ -361,7 +361,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
               Text(
                 txt2,
                 textAlign: TextAlign.center,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w200,
                   fontSize: 14,
                   letterSpacing: 0.27,

@@ -2,8 +2,7 @@ import 'package:aws_flutter/hotel_booking/hotel_app_theme.dart';
 import 'package:flutter/material.dart';
 
 class RangeSliderView extends StatefulWidget {
-  const RangeSliderView({Key? key, this.values, this.onChangeRangeValues})
-      : super(key: key);
+  const RangeSliderView({super.key, this.values, this.onChangeRangeValues});
 
   final Function(RangeValues)? onChangeRangeValues;
   final RangeValues? values;
@@ -34,7 +33,7 @@ class _RangeSliderViewState extends State<RangeSliderView> {
                     flex: _values!.start.round(),
                     child: const SizedBox(),
                   ),
-                  Container(
+                  SizedBox(
                     width: 54,
                     child: Text(
                       '\$${_values!.start.round()}',
@@ -53,7 +52,7 @@ class _RangeSliderViewState extends State<RangeSliderView> {
                     flex: _values!.end.round(),
                     child: const SizedBox(),
                   ),
-                  Container(
+                  SizedBox(
                     width: 54,
                     child: Text(
                       '\$${_values!.end.round()}',
@@ -167,10 +166,10 @@ class CustomRangeThumbShape extends RangeSliderThumbShape {
               MaskFilter.blur(BlurStyle.normal, convertRadiusToSigma(8)));
 
     final Paint cPaint = Paint();
-    cPaint..color = Colors.white;
-    cPaint..strokeWidth = 14 / 2;
+    cPaint.color = Colors.white;
+    cPaint.strokeWidth = 14 / 2;
     canvas.drawCircle(Offset(center.dx, center.dy), 12, cPaint);
-    cPaint..color = colorTween.evaluate(enableAnimation)!;
+    cPaint.color = colorTween.evaluate(enableAnimation)!;
     canvas.drawCircle(Offset(center.dx, center.dy), 10, cPaint);
     canvas.drawPath(thumbPath, Paint()..color = Colors.white);
   }
