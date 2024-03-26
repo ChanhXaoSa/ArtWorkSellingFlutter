@@ -1,11 +1,14 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:aws_flutter/api/base_client.dart';
 import 'package:aws_flutter/model/art_work.dart';
 import 'package:aws_flutter/model/category.dart';
+import 'package:aws_flutter/model/login_model.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddNewArtWorkScreen extends StatefulWidget {
@@ -27,10 +30,30 @@ class _AddArtWorkState extends State<AddNewArtWorkScreen> {
   late Future<List<Category>> futureCategory;
   late List<Category> listCategory = [];
 
+  final storage = FlutterSecureStorage();
+  late Future<Accinfo?> accInfoFuture;
+  late Future<String?> tokenFuture;
+  late Accinfo accinfo = Accinfo.empty();
+  late String token = '';
+
   @override
   void dispose() {
     // _imageUrlController.dispose();
     super.dispose();
+  }
+
+  Future<String?> getToken() async {
+    return await storage.read(key: 'token');
+  }
+
+  Future<Accinfo?> getAccInfo() async {
+    String? accinfoJsonString = await storage.read(key: 'accinfo');
+    if (accinfoJsonString != null) {
+      Map<String, dynamic> accinfoJson = json.decode(accinfoJsonString);
+      Accinfo accinfo = Accinfo.fromJson(accinfoJson);
+      return accinfo;
+    }
+    return null;
   }
 
   void _submitForm() {
@@ -44,7 +67,7 @@ class _AddArtWorkState extends State<AddNewArtWorkScreen> {
           price: _price
       );
       final response = BaseClient().createArtWork(
-          userAccountId: '871a809a-b3fa-495b-9cc2-c5d738a866cg',
+          userAccountId: accinfo.id,
           categoryId: newArtwork.categoryId,
           name: newArtwork.name,
           description: newArtwork.description,
@@ -108,6 +131,18 @@ class _AddArtWorkState extends State<AddNewArtWorkScreen> {
     await futureCategory.then((value) => setState(() {
       listCategory = value.toList();
     }));
+    tokenFuture = getToken();
+    tokenFuture.then((value) => {
+      setState(() {
+        token = value!;
+      })
+    });
+    accInfoFuture = getAccInfo();
+    accInfoFuture.then((value) => {
+      setState(() {
+        accinfo = value!;
+      })
+    });
   }
 
   @override
