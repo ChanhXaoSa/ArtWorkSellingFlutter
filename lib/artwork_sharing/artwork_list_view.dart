@@ -88,7 +88,7 @@ class ArtWorkListView extends StatelessWidget {
                                               MainAxisAlignment.start,
                                               children: <Widget>[
                                                 Text(
-                                                  artWorkData!.description,
+                                                  artWorkData!.category.categoryName,
                                                   style: TextStyle(
                                                       fontSize: 14,
                                                       color: Colors.grey

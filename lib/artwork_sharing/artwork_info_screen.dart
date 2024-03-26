@@ -15,7 +15,7 @@ class ArtWorkInfoScreen extends StatefulWidget {
 class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
     with TickerProviderStateMixin {
   late Future<ArtWork> futureArtWork;
-  late ArtWork artWork;
+  late ArtWork artWork = ArtWork.empty();
 
   final double infoHeight = 364.0;
   AnimationController? animationController;
@@ -59,7 +59,10 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
     final double tempHeight = MediaQuery.of(context).size.height -
         (MediaQuery.of(context).size.width / 1.2) +
         24.0;
-    return Container(
+    if(artWork.id.isEmpty) {
+      return const Center(child: CircularProgressIndicator(),);
+    } else {
+      return Container(
       color: DesignArtWorkAppTheme.nearlyWhite,
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -325,6 +328,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
         ),
       ),
     );
+    }
   }
 
   Widget getTimeBoxUI(String text1, String txt2) {

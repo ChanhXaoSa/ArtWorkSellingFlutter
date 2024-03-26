@@ -82,7 +82,7 @@ class _AddArtWorkState extends State<AddNewArtWorkScreen> {
               content: Text('Add artwork success'),
             ),
           );
-          Navigator.push(context,
+          Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) =>
                 ArtWorkHomeScreen(),
             ),

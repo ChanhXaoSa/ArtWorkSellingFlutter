@@ -1,37 +1,59 @@
 
+import 'dart:convert';
+
 import 'package:aws_flutter/api/base_client.dart';
 import 'package:aws_flutter/artwork_sharing/artwork_info_screen.dart';
 import 'package:aws_flutter/artwork_sharing/artwork_list_view.dart';
 import 'package:aws_flutter/hotel_booking/calendar_popup_view.dart';
 import 'package:aws_flutter/hotel_booking/model/hotel_list_data.dart';
 import 'package:aws_flutter/model/art_work.dart';
+import 'package:aws_flutter/model/login_model.dart';
 import 'package:aws_flutter/profile_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:aws_flutter/hotel_booking/filters_screen.dart';
 import 'package:aws_flutter/hotel_booking/hotel_app_theme.dart';
 
-class ArtWorkHomeScreen extends StatefulWidget {
-  const ArtWorkHomeScreen({super.key});
+class MyArtWorkScreen extends StatefulWidget {
+  const MyArtWorkScreen({super.key});
 
   @override
-  _ArtWorkScreenState createState() => _ArtWorkScreenState();
+  _MyArtWorkScreenState createState() => _MyArtWorkScreenState();
 }
 
-class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
+class _MyArtWorkScreenState extends State<MyArtWorkScreen>
     with TickerProviderStateMixin {
   AnimationController? animationController;
   List<HotelListData> hotelList = HotelListData.hotelList;
   final ScrollController _scrollController = ScrollController();
   String _searchString = '';
   bool _isSearching = false;
-  DateTime startDate = DateTime.now();
-  DateTime endDate = DateTime.now().add(const Duration(days: 5));
 
   late Future<List<ArtWork>> futureArtWork;
   late List<ArtWork> listArtWork = [];
   late List<ArtWork> listSearchArtWork = [];
+  late Future<Accinfo?> accInfoFuture;
+  late Future<String?> tokenFuture;
+  late Accinfo accinfo = Accinfo.empty();
+  late String token = '';
+
+  final storage = FlutterSecureStorage();
+
+  Future<String?> getToken() async {
+    return await storage.read(key: 'token');
+  }
+
+  Future<Accinfo?> getAccInfo() async {
+    String? accinfoJsonString = await storage.read(key: 'accinfo');
+    if (accinfoJsonString != null) {
+      Map<String, dynamic> accinfoJson = json.decode(accinfoJsonString);
+      Accinfo accinfo = Accinfo.fromJson(accinfoJson);
+      return accinfo;
+    }
+    return null;
+  }
 
   @override
   void initState() {
@@ -42,9 +64,28 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
   }
 
   Future<void> initializedData() async {
+    tokenFuture = getToken();
+    tokenFuture.then((value) => {
+      setState(() {
+        token = value!;
+      })
+    });
+    accInfoFuture = getAccInfo();
+    accInfoFuture.then((value) => {
+      setState(() {
+        accinfo = value!;
+      })
+    });
     futureArtWork = BaseClient().fetchArtWorks();
     await futureArtWork.then((value) => setState(() {
-      listArtWork = value.toList();
+      for(var item in value) {
+        if(accinfo.id == item.userOwnerId) {
+          listArtWork.add(item);
+        } else if (accinfo.id != item.userOwnerId && accinfo.id == item.userAccountId) {
+          item.name = item.name + ' (sold)';
+          listArtWork.add(item);
+        }
+      }
     }));
   }
 
@@ -111,13 +152,6 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                                   );
                                 }, childCount: 1),
                           ),
-                          SliverPersistentHeader(
-                            pinned: true,
-                            floating: true,
-                            delegate: ContestTabHeader(
-                              getFilterBarUI(),
-                            ),
-                          ),
                         ];
                       },
                       body: _isSearching ? getArtWorksUI(listSearchArtWork) : getArtWorksUI(listArtWork),
@@ -165,32 +199,6 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
           );
         },
       ),
-    );
-  }
-
-  Widget getArtWorkViewList() {
-    final List<Widget> artWorkListViews = <Widget>[];
-    for (int i = 0; i < listArtWork.length; i++) {
-      final int count = listArtWork.length;
-      final Animation<double> animation =
-      Tween<double>(begin: 0.0, end: 1.0).animate(
-        CurvedAnimation(
-          parent: animationController!,
-          curve: Interval((1 / count) * i, 1.0, curve: Curves.fastOutSlowIn),
-        ),
-      );
-      artWorkListViews.add(
-        ArtWorkListView(
-          callback: () {},
-          artWorkData: listArtWork[i],
-          animation: animation,
-          animationController: animationController!,
-        ),
-      );
-    }
-    animationController?.forward();
-    return Column(
-      children: artWorkListViews,
     );
   }
 
@@ -261,109 +269,14 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Icon(FontAwesomeIcons.magnifyingGlass,
-                      size: 20,
-                      color: HotelAppTheme.buildLightTheme().colorScheme.background,),
+                    size: 20,
+                    color: HotelAppTheme.buildLightTheme().colorScheme.background,),
                 ),
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget getFilterBarUI() {
-    return Stack(
-      children: <Widget>[
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-            height: 24,
-            decoration: BoxDecoration(
-              color: HotelAppTheme.buildLightTheme().colorScheme.background,
-              boxShadow: <BoxShadow>[
-                BoxShadow(
-                    color: Colors.grey.withOpacity(0.2),
-                    offset: const Offset(0, -2),
-                    blurRadius: 8.0),
-              ],
-            ),
-          ),
-        ),
-        Container(
-          color: HotelAppTheme.buildLightTheme().colorScheme.background,
-          child: Padding(
-            padding:
-            const EdgeInsets.only(left: 16, right: 16, top: 8, bottom: 4),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      '${listArtWork.length} artworks found',
-                      style: const TextStyle(
-                        fontWeight: FontWeight.w100,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    focusColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    splashColor: Colors.grey.withOpacity(0.2),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(4.0),
-                    ),
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      Navigator.push<dynamic>(
-                        context,
-                        MaterialPageRoute<dynamic>(
-                            builder: (BuildContext context) => const FiltersScreen(),
-                            fullscreenDialog: true),
-                      );
-                    },
-                    child: const Padding(
-                      padding: EdgeInsets.only(left: 8),
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            'Filter',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w100,
-                              fontSize: 16,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Icon(Icons.sort,
-                                color: Color(0xffC79D67)),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        const Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Divider(
-            height: 1,
-          ),
-        )
-      ],
     );
   }
 
@@ -406,7 +319,7 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
             const Expanded(
               child: Center(
                 child: Text(
-                  'Explore',
+                  'My Artworks',
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 22,
@@ -434,26 +347,6 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                   //     ),
                   //   ),
                   // ),
-                  Material(
-                    color: Colors.transparent,
-                    child: InkWell(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(32.0),
-                      ),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ProfileScreen(),
-                          ),
-                        );
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(FontAwesomeIcons.solidUser),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             )

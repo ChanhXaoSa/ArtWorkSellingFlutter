@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:aws_flutter/artwork_sharing/add_new_artwork_screen.dart';
+import 'package:aws_flutter/artwork_sharing/my_artwork_screen.dart';
 import 'package:aws_flutter/login_screen.dart';
 import 'package:aws_flutter/model/login_model.dart';
 import 'package:flutter/material.dart';
@@ -122,9 +123,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             CustomListTile(
               icon: FontAwesomeIcons.objectUngroup,
-              title: 'Your Artworks',
+              title: 'My Artworks',
               onTap: () {
-
+                Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>
+                      MyArtWorkScreen(),
+                  ),
+                );
               },
             ),
             // CustomListTile(

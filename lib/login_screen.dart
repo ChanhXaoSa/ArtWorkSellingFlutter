@@ -126,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   ),
                                 ),
                                 loginSuccess(value),
-                                Navigator.push(
+                                Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ArtWorkHomeScreen(),
