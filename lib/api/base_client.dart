@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:ffi';
 import 'package:aws_flutter/model/category.dart';
 import 'package:aws_flutter/model/login_model.dart';
+import 'package:aws_flutter/model/order.dart';
 import 'package:http/http.dart' as http;
 import 'package:aws_flutter/model/art_work.dart';
 
@@ -111,6 +112,40 @@ class BaseClient {
       return result.map((e) => Category.fromJson(e)).toList();
     } else {
       throw Exception('Failed to load data');
+    }
+  }
+
+  //fetch api order
+  Future<http.Response> createOrder({
+    required Order order
+  }) async {
+    final apiUrl = 'http://aws-prn.somee.com/api/Order/Add';
+    final headers = <String, String> {
+      'Content-Type': 'application/json',
+    };
+
+    final orderData = {
+      'buyerAccountId': order.buyerAccountId,
+      'ownerAccountId': order.ownerAccountId,
+      'artWorkID': order.artWorkId,
+      'status': order.status,
+    };
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(orderData),
+    );
+
+    if (response.statusCode == 200) {
+      // Xử lý kết quả thành công
+      print('Đã tạo order thành công');
+      return response;
+    } else {
+      // Xử lý lỗi hoặc trạng thái khác
+      print('Lỗi khi tạo order: ${response.statusCode}');
+      print('Nội dung lỗi: ${response.body}');
+      return response;
     }
   }
 }
