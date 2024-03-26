@@ -1,5 +1,7 @@
 import 'package:aws_flutter/app_theme.dart';
+import 'package:aws_flutter/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer(
@@ -182,8 +184,21 @@ class _HomeDrawerState extends State<HomeDrawer> {
     );
   }
 
-  void onTapped() {
-    print('Doing Something...'); // Print to console.
+  void onTapped() async {
+    final storage = FlutterSecureStorage();
+    await storage.delete(key: 'token');
+    await storage.delete(key: 'accinfo');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Logout success'),
+      ),
+    );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => LoginScreen(),
+      ),
+    );
   }
 
   Widget inkwell(DrawerList listData) {

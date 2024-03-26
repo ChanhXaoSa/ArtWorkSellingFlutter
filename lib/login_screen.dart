@@ -1,19 +1,31 @@
+import 'dart:convert';
+
+import 'package:aws_flutter/api/base_client.dart';
+import 'package:aws_flutter/artwork_sharing/artwork_home_screen.dart';
+import 'package:aws_flutter/model/login_model.dart';
 import 'package:aws_flutter/signup_screen.dart';
 import 'package:aws_flutter/widgets/inputTextWidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class LoginScreen extends StatefulWidget  {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen>{
+class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _pwdController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+  Future<void> loginSuccess(LoginModel loginModel) async {
+    final storage = FlutterSecureStorage();
+    await storage.write(key: 'token', value: loginModel.token);
+    await storage.write(key: 'accinfo', value: json.encode(loginModel.accinfo.toJson()));
+  }
 
   @override
   void initState() {
@@ -42,7 +54,6 @@ class _LoginScreenState extends State<LoginScreen>{
               fontSize: 27,
               fontWeight: FontWeight.bold,
               color: Color(0xff000000),
-
             ),
             textAlign: TextAlign.left,
           ),
@@ -96,7 +107,33 @@ class _LoginScreenState extends State<LoginScreen>{
                 child: ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-
+                      final response = BaseClient()
+                          .login(_emailController.text, _pwdController.text);
+                      response.then((value) => {
+                            if (value.token.isEmpty)
+                              {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Login fail'),
+                                  ),
+                                )
+                              }
+                            else
+                              {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                    content: Text('Login success'),
+                                  ),
+                                ),
+                                loginSuccess(value),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ArtWorkHomeScreen(),
+                                  ),
+                                )
+                              }
+                          });
                     }
                     //Get.to(ChoiceScreen());
                   },
@@ -154,9 +191,7 @@ class _LoginScreenState extends State<LoginScreen>{
               child: Material(
                 borderRadius: BorderRadius.circular(12.0),
                 child: InkWell(
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -190,9 +225,7 @@ class _LoginScreenState extends State<LoginScreen>{
               child: Material(
                 borderRadius: BorderRadius.circular(12.0),
                 child: InkWell(
-                  onTap: () {
-
-                  },
+                  onTap: () {},
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
@@ -235,19 +268,15 @@ class _LoginScreenState extends State<LoginScreen>{
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               background:
-              Image.asset("assets/images/cover.jpg", fit: BoxFit.cover),
+                  Image.asset("assets/images/cover.jpg", fit: BoxFit.cover),
             ),
           ),
           SliverToBoxAdapter(
             child: Container(
               decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-
-                  ),
+                  borderRadius: BorderRadius.only(),
                   gradient: LinearGradient(
-                      colors: <Color>[Color(0xFF7A8BA3), Color(0xFF7A8BA3)])
-
-              ),
+                      colors: <Color>[Color(0xFF7A8BA3), Color(0xFF7A8BA3)])),
               width: screenWidth,
               height: 25,
               child: Column(
@@ -258,7 +287,6 @@ class _LoginScreenState extends State<LoginScreen>{
                     height: 25,
                     decoration: const BoxDecoration(
                       color: Colors.white,
-
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30.0),
                         topRight: Radius.circular(30.0),
@@ -271,9 +299,9 @@ class _LoginScreenState extends State<LoginScreen>{
           ),
           SliverList(
               delegate:
-              SliverChildBuilderDelegate((BuildContext context, int index) {
-                return widgetList[index];
-              }, childCount: widgetList.length))
+                  SliverChildBuilderDelegate((BuildContext context, int index) {
+            return widgetList[index];
+          }, childCount: widgetList.length))
         ],
       ),
       bottomNavigationBar: Stack(
@@ -283,31 +311,32 @@ class _LoginScreenState extends State<LoginScreen>{
             color: Colors.white,
             child: Center(
                 child: Wrap(
-                  children: [
-                    Text(
-                      "Don't have an account?  ",
-                      style: TextStyle(
-                          color: Colors.grey[600], fontWeight: FontWeight.bold),
+              children: [
+                Text(
+                  "Don't have an account?  ",
+                  style: TextStyle(
+                      color: Colors.grey[600], fontWeight: FontWeight.bold),
+                ),
+                Material(
+                    child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignUpScreen()),
+                    );
+                  },
+                  child: Text(
+                    "Sign Up",
+                    style: TextStyle(
+                      color: Colors.blue[800],
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
                     ),
-                    Material(
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const SignUpScreen()),
-                            );
-                          },
-                          child: Text(
-                            "Sign Up",
-                            style: TextStyle(
-                              color: Colors.blue[800],
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                        )),
-                  ],
+                  ),
                 )),
+              ],
+            )),
           ),
         ],
       ),

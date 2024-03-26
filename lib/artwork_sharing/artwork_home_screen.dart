@@ -5,6 +5,7 @@ import 'package:aws_flutter/artwork_sharing/artwork_list_view.dart';
 import 'package:aws_flutter/hotel_booking/calendar_popup_view.dart';
 import 'package:aws_flutter/hotel_booking/model/hotel_list_data.dart';
 import 'package:aws_flutter/model/art_work.dart';
+import 'package:aws_flutter/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
@@ -447,7 +448,7 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      '${listArtWork.length} hotels found',
+                      '${listArtWork.length} artworks found',
                       style: const TextStyle(
                         fontWeight: FontWeight.w100,
                         fontSize: 16,
@@ -604,7 +605,14 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                       borderRadius: const BorderRadius.all(
                         Radius.circular(32.0),
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfileScreen(),
+                          ),
+                        );
+                      },
                       child: const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Icon(FontAwesomeIcons.solidUser),

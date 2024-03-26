@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-LoginModel loginModelFromJson(String str) => LoginModel.fromJson(json.decode(str));
+LoginModel loginModelFromJson(String str) =>
+    LoginModel.fromJson(json.decode(str));
 
 String loginModelToJson(LoginModel data) => json.encode(data.toJson());
 
@@ -17,15 +18,19 @@ class LoginModel {
     required this.accinfo,
   });
 
+  LoginModel.empty()
+      : token = '',
+        accinfo = Accinfo.empty();
+
   factory LoginModel.fromJson(Map<String, dynamic> json) => LoginModel(
-    token: json["token"],
-    accinfo: Accinfo.fromJson(json["accinfo"]),
-  );
+        token: json["token"],
+        accinfo: Accinfo.fromJson(json["accinfo"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "token": token,
-    "accinfo": accinfo.toJson(),
-  };
+        "token": token,
+        "accinfo": accinfo.toJson(),
+      };
 }
 
 class Accinfo {
@@ -83,59 +88,86 @@ class Accinfo {
     required this.accessFailedCount,
   });
 
+  Accinfo.empty()
+      : name = null,
+        address = null,
+        adminAccounts = null,
+        audienceAccounts = null,
+        artistAccounts = null,
+        interacts = null,
+        reports = null,
+        artWorks = null,
+        orders = null,
+        wishLists = null,
+        id = '',
+        userName = '',
+        normalizedUserName = '',
+        email = '',
+        normalizedEmail = '',
+        emailConfirmed = false,
+        passwordHash = '',
+        securityStamp = '',
+        concurrencyStamp = '',
+        phoneNumber = '',
+        phoneNumberConfirmed = false,
+        twoFactorEnabled = false,
+        lockoutEnd = null,
+        lockoutEnabled = false,
+        accessFailedCount = 0;
+
   factory Accinfo.fromJson(Map<String, dynamic> json) => Accinfo(
-    name: json["name"],
-    address: json["address"],
-    adminAccounts: json["adminAccounts"],
-    audienceAccounts: json["audienceAccounts"],
-    artistAccounts: json["artistAccounts"],
-    interacts: json["interacts"],
-    reports: json["reports"],
-    artWorks: json["artWorks"],
-    orders: json["orders"],
-    wishLists: json["wishLists"],
-    id: json["id"],
-    userName: json["userName"],
-    normalizedUserName: json["normalizedUserName"],
-    email: json["email"],
-    normalizedEmail: json["normalizedEmail"],
-    emailConfirmed: json["emailConfirmed"],
-    passwordHash: json["passwordHash"],
-    securityStamp: json["securityStamp"],
-    concurrencyStamp: json["concurrencyStamp"],
-    phoneNumber: json["phoneNumber"],
-    phoneNumberConfirmed: json["phoneNumberConfirmed"],
-    twoFactorEnabled: json["twoFactorEnabled"],
-    lockoutEnd: json["lockoutEnd"],
-    lockoutEnabled: json["lockoutEnabled"],
-    accessFailedCount: json["accessFailedCount"],
-  );
+        name: json["name"],
+        address: json["address"],
+        adminAccounts: json["adminAccounts"],
+        audienceAccounts: json["audienceAccounts"],
+        artistAccounts: json["artistAccounts"],
+        interacts: json["interacts"],
+        reports: json["reports"],
+        artWorks: json["artWorks"],
+        orders: json["orders"],
+        wishLists: json["wishLists"],
+        id: json["id"],
+        userName: json["userName"],
+        normalizedUserName: json["normalizedUserName"],
+        email: json["email"],
+        normalizedEmail: json["normalizedEmail"],
+        emailConfirmed: json["emailConfirmed"],
+        passwordHash: json["passwordHash"],
+        securityStamp: json["securityStamp"],
+        concurrencyStamp: json["concurrencyStamp"],
+        phoneNumber: json["phoneNumber"],
+        phoneNumberConfirmed: json["phoneNumberConfirmed"],
+        twoFactorEnabled: json["twoFactorEnabled"],
+        lockoutEnd: json["lockoutEnd"],
+        lockoutEnabled: json["lockoutEnabled"],
+        accessFailedCount: json["accessFailedCount"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "name": name,
-    "address": address,
-    "adminAccounts": adminAccounts,
-    "audienceAccounts": audienceAccounts,
-    "artistAccounts": artistAccounts,
-    "interacts": interacts,
-    "reports": reports,
-    "artWorks": artWorks,
-    "orders": orders,
-    "wishLists": wishLists,
-    "id": id,
-    "userName": userName,
-    "normalizedUserName": normalizedUserName,
-    "email": email,
-    "normalizedEmail": normalizedEmail,
-    "emailConfirmed": emailConfirmed,
-    "passwordHash": passwordHash,
-    "securityStamp": securityStamp,
-    "concurrencyStamp": concurrencyStamp,
-    "phoneNumber": phoneNumber,
-    "phoneNumberConfirmed": phoneNumberConfirmed,
-    "twoFactorEnabled": twoFactorEnabled,
-    "lockoutEnd": lockoutEnd,
-    "lockoutEnabled": lockoutEnabled,
-    "accessFailedCount": accessFailedCount,
-  };
+        "name": name,
+        "address": address,
+        "adminAccounts": adminAccounts,
+        "audienceAccounts": audienceAccounts,
+        "artistAccounts": artistAccounts,
+        "interacts": interacts,
+        "reports": reports,
+        "artWorks": artWorks,
+        "orders": orders,
+        "wishLists": wishLists,
+        "id": id,
+        "userName": userName,
+        "normalizedUserName": normalizedUserName,
+        "email": email,
+        "normalizedEmail": normalizedEmail,
+        "emailConfirmed": emailConfirmed,
+        "passwordHash": passwordHash,
+        "securityStamp": securityStamp,
+        "concurrencyStamp": concurrencyStamp,
+        "phoneNumber": phoneNumber,
+        "phoneNumberConfirmed": phoneNumberConfirmed,
+        "twoFactorEnabled": twoFactorEnabled,
+        "lockoutEnd": lockoutEnd,
+        "lockoutEnabled": lockoutEnabled,
+        "accessFailedCount": accessFailedCount,
+      };
 }

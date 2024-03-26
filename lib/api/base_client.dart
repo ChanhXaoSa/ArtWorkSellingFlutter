@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ffi';
 import 'package:aws_flutter/model/category.dart';
+import 'package:aws_flutter/model/login_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:aws_flutter/model/art_work.dart';
 
@@ -8,6 +9,31 @@ const String baseUrl = 'https://127.0.0.1:7178/api';
 
 class BaseClient {
   var client = http.Client();
+
+  //Fetch Account
+  Future<LoginModel> login(String email, String password) async {
+    final apiUrl = 'http://aws-prn.somee.com/api/Auth/SignIn';
+    final headers = <String, String> {
+      'Content-Type': 'application/json',
+    };
+
+    final loginData = {
+      'email': email,
+      'password': password
+    };
+
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(loginData),
+    );
+
+    if(response.statusCode == 200) {
+      return LoginModel.fromJson(jsonDecode(response.body));
+    } else {
+      return LoginModel.empty();
+    }
+  }
 
   //Fetch Api ArtWork
   Future<List<ArtWork>> fetchArtWorks() async {
