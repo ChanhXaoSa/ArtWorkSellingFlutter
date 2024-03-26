@@ -296,7 +296,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                                         .showSnackBar(
                                                       SnackBar(
                                                         content: Text(
-                                                            'Add artwork success'),
+                                                            'Order artwork success'),
                                                       ),
                                                     )
                                                   }
@@ -307,7 +307,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                                         .showSnackBar(
                                                       SnackBar(
                                                         content: Text(
-                                                            'Add artwork fail'),
+                                                            'Order artwork fail'),
                                                       ),
                                                     )
                                                   }
