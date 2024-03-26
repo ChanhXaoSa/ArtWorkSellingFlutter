@@ -2,10 +2,12 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:aws_flutter/artwork_sharing/add_new_artwork_screen.dart';
 import 'package:aws_flutter/login_screen.dart';
 import 'package:aws_flutter/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -82,28 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(12.0),
         child: ListView(
           children: [
-            // Row to display user name and image
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //   children: [
-            //     Padding(
-            //       padding: const EdgeInsets.all(20),
-            //       child: Text(
-            //         accinfo.userName,
-            //         style: const TextStyle(fontSize: 20.0),
-            //       ),
-            //     ),
-            //     const Padding(
-            //       padding: EdgeInsets.all(20.0),
-            //       child: CircleAvatar(
-            //         radius: 30,
-            //         backgroundImage: AssetImage('images/logo.png'),
-            //       ),
-            //     ),
-            //   ],
-            // ),
-            // const SizedBox(height: 16.0),
-
             // CustomListTile
             CustomListTile(
               icon: Icons.person,
@@ -117,6 +97,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
               title: 'Email',
               subtitle: accinfo.email,
             ),
+
+            if(accinfo.isArtistAccount == true)
+              CustomListTile(
+                icon: Icons.add,
+                title: 'Add Artwork',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddNewArtWorkScreen(),
+                    ),
+                  );
+                },
+              ),
+
             CustomListTile(
               icon: Icons.history,
               title: 'Order History',
@@ -126,21 +121,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
 
             CustomListTile(
-              icon: Icons.edit,
-              title: 'Edit profile',
+              icon: FontAwesomeIcons.objectUngroup,
+              title: 'Your Artworks',
               onTap: () {
 
               },
             ),
+            // CustomListTile(
+            //   icon: Icons.edit,
+            //   title: 'Edit profile',
+            //   onTap: () {
+            //
+            //   },
+            // ),
 
             // CustomListTile to display Settings
-            CustomListTile(
-              icon: Icons.settings,
-              title: 'Settings',
-              onTap: () {
-
-              },
-            ),
+            // CustomListTile(
+            //   icon: Icons.settings,
+            //   title: 'Settings',
+            //   onTap: () {
+            //
+            //   },
+            // ),
 
             // Log out
             CustomListTile(

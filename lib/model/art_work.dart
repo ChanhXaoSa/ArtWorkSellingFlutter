@@ -4,14 +4,17 @@
 
 import 'dart:convert';
 
-List<ArtWork> artWorkFromJson(String str) => List<ArtWork>.from(json.decode(str).map((x) => ArtWork.fromJson(x)));
+import 'package:aws_flutter/model/category.dart';
+import 'package:aws_flutter/model/interact.dart';
 
-String artWorkToJson(List<ArtWork> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+ArtWork artWorkFromJson(String str) => ArtWork.fromJson(json.decode(str));
+
+String artWorkToJson(ArtWork data) => json.encode(data.toJson());
 
 class ArtWork {
-  dynamic applicationUser;
   String userAccountId;
   String userOwnerId;
+  String categoryId;
   String name;
   String description;
   int price;
@@ -19,20 +22,21 @@ class ArtWork {
   int artWorkStatus;
   bool isSold;
   bool isPreOrder;
-  dynamic orders;
-  dynamic interacts;
+  List<dynamic> orders;
+  List<Interact> interacts;
+  dynamic wishLists;
+  CategoryModel category;
   DateTime created;
   dynamic createdBy;
   dynamic lastModified;
   dynamic lastModifiedBy;
   bool isDeleted;
   String id;
-  List<dynamic> domainEvents;
 
   ArtWork({
-    required this.applicationUser,
     required this.userAccountId,
     required this.userOwnerId,
+    required this.categoryId,
     required this.name,
     required this.description,
     required this.price,
@@ -42,19 +46,20 @@ class ArtWork {
     required this.isPreOrder,
     required this.orders,
     required this.interacts,
+    required this.wishLists,
+    required this.category,
     required this.created,
     required this.createdBy,
     required this.lastModified,
     required this.lastModifiedBy,
     required this.isDeleted,
     required this.id,
-    required this.domainEvents,
   });
 
   factory ArtWork.fromJson(Map<String, dynamic> json) => ArtWork(
-    applicationUser: json["applicationUser"],
     userAccountId: json["userAccountId"],
     userOwnerId: json["userOwnerId"],
+    categoryId: json["categoryId"],
     name: json["name"],
     description: json["description"],
     price: json["price"],
@@ -62,21 +67,22 @@ class ArtWork {
     artWorkStatus: json["artWorkStatus"],
     isSold: json["isSold"],
     isPreOrder: json["isPreOrder"],
-    orders: json["orders"],
-    interacts: json["interacts"],
+    orders: List<dynamic>.from(json["orders"].map((x) => x)),
+    interacts: List<Interact>.from(json["interacts"].map((x) => Interact.fromJson(x))),
+    wishLists: json["wishLists"],
+    category: CategoryModel.fromJson(json["category"]),
     created: DateTime.parse(json["created"]),
     createdBy: json["createdBy"],
     lastModified: json["lastModified"],
     lastModifiedBy: json["lastModifiedBy"],
     isDeleted: json["isDeleted"],
     id: json["id"],
-    domainEvents: List<dynamic>.from(json["domainEvents"].map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
-    "applicationUser": applicationUser,
     "userAccountId": userAccountId,
     "userOwnerId": userOwnerId,
+    "categoryId": categoryId,
     "name": name,
     "description": description,
     "price": price,
@@ -84,15 +90,16 @@ class ArtWork {
     "artWorkStatus": artWorkStatus,
     "isSold": isSold,
     "isPreOrder": isPreOrder,
-    "orders": orders,
-    "interacts": interacts,
+    "orders": List<dynamic>.from(orders.map((x) => x)),
+    "interacts": List<dynamic>.from(interacts.map((x) => x.toJson())),
+    "wishLists": wishLists,
+    "category": category.toJson(),
     "created": created.toIso8601String(),
     "createdBy": createdBy,
     "lastModified": lastModified,
     "lastModifiedBy": lastModifiedBy,
     "isDeleted": isDeleted,
     "id": id,
-    "domainEvents": List<dynamic>.from(domainEvents.map((x) => x)),
   };
 }
 

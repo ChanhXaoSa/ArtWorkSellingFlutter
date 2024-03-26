@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:aws_flutter/api/base_client.dart';
+import 'package:aws_flutter/artwork_sharing/artwork_home_screen.dart';
+import 'package:aws_flutter/artwork_sharing/artwork_info_screen.dart';
 import 'package:aws_flutter/model/art_work.dart';
 import 'package:aws_flutter/model/category.dart';
 import 'package:aws_flutter/model/login_model.dart';
@@ -78,6 +80,11 @@ class _AddArtWorkState extends State<AddNewArtWorkScreen> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Add artwork success'),
+            ),
+          );
+          Navigator.push(context,
+            MaterialPageRoute(builder: (context) =>
+                ArtWorkHomeScreen(),
             ),
           );
         } else {
@@ -172,7 +179,7 @@ class _AddArtWorkState extends State<AddNewArtWorkScreen> {
                   ),
                 ),
                 DropdownButtonFormField(
-                    value: listCategory[0].id,
+                    value: listCategory.firstOrNull?.id,
                     onChanged: (value) {
                       setState(() {
                         _selectedCategory = value!;

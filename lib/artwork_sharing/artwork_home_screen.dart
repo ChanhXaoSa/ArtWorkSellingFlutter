@@ -8,7 +8,6 @@ import 'package:aws_flutter/model/art_work.dart';
 import 'package:aws_flutter/profile_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:intl/intl.dart';
 import 'package:aws_flutter/hotel_booking/filters_screen.dart';
 import 'package:aws_flutter/hotel_booking/hotel_app_theme.dart';
 
@@ -87,7 +86,6 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
                                   return Column(
                                     children: <Widget>[
                                       getSearchBarUI(),
-                                      getTimeDateUI(),
                                     ],
                                   );
                                 }, childCount: 1),
@@ -220,125 +218,6 @@ class _ArtWorkScreenState extends State<ArtWorkHomeScreen>
     animationController?.forward();
     return Column(
       children: artWorkListViews,
-    );
-  }
-
-  Widget getTimeDateUI() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18, bottom: 16),
-      child: Row(
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    focusColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    hoverColor: Colors.transparent,
-                    splashColor: Colors.grey.withOpacity(0.2),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(4.0),
-                    ),
-                    onTap: () {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      // setState(() {
-                      //   isDatePopupOpen = true;
-                      // });
-                      showDemoDialog(context: context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 8, right: 8, top: 4, bottom: 4),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Text(
-                            'Choose date',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w100,
-                                fontSize: 16,
-                                color: Colors.grey.withOpacity(0.8)),
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            '${DateFormat("dd, MMM").format(startDate)} - ${DateFormat("dd, MMM").format(endDate)}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w100,
-                              fontSize: 16,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // Padding(
-          //   padding: const EdgeInsets.only(right: 8),
-          //   child: Container(
-          //     width: 1,
-          //     height: 42,
-          //     color: Colors.grey.withOpacity(0.8),
-          //   ),
-          // ),
-          // Expanded(
-          //   child: Row(
-          //     children: <Widget>[
-          //       Material(
-          //         color: Colors.transparent,
-          //         child: InkWell(
-          //           focusColor: Colors.transparent,
-          //           highlightColor: Colors.transparent,
-          //           hoverColor: Colors.transparent,
-          //           splashColor: Colors.grey.withOpacity(0.2),
-          //           borderRadius: const BorderRadius.all(
-          //             Radius.circular(4.0),
-          //           ),
-          //           onTap: () {
-          //             FocusScope.of(context).requestFocus(FocusNode());
-          //           },
-          //           child: Padding(
-          //             padding: const EdgeInsets.only(
-          //                 left: 8, right: 8, top: 4, bottom: 4),
-          //             child: Column(
-          //               mainAxisAlignment: MainAxisAlignment.center,
-          //               crossAxisAlignment: CrossAxisAlignment.start,
-          //               children: <Widget>[
-          //                 Text(
-          //                   'Number of Rooms',
-          //                   style: TextStyle(
-          //                       fontWeight: FontWeight.w100,
-          //                       fontSize: 16,
-          //                       color: Colors.grey.withOpacity(0.8)),
-          //                 ),
-          //                 const SizedBox(
-          //                   height: 8,
-          //                 ),
-          //                 Text(
-          //                   '1 Room - 2 Adults',
-          //                   style: TextStyle(
-          //                     fontWeight: FontWeight.w100,
-          //                     fontSize: 16,
-          //                   ),
-          //                 ),
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       ),
-          //     ],
-          //   ),
-          // ),
-        ],
-      ),
     );
   }
 
