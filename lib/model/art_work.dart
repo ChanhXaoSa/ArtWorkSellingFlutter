@@ -95,3 +95,13 @@ class ArtWork {
     "domainEvents": List<dynamic>.from(domainEvents.map((x) => x)),
   };
 }
+
+class ArtworkModel {
+  String imageUrl;
+  String categoryId;
+  String name;
+  String description;
+  double price;
+
+  ArtworkModel({required this.imageUrl, required this.categoryId, required this.name, required this.description, required this.price});
+}

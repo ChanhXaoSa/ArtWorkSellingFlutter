@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "680014927440",
+    "project_id": "aws-prn231-doan",
+    "storage_bucket": "aws-prn231-doan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:680014927440:android:bffd3b254690d75efea355",
+        "android_client_info": {
+          "package_name": "com.aws.aws_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAS7UFL0TlXg9MNdOTI91Nhf6AkR9EZOyI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

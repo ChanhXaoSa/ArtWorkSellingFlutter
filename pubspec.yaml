@@ -43,6 +43,9 @@ dependencies:
   http: ^1.2.1
   dio: ^5.4.1
   image_picker: ^1.0.7
+  firebase_core: ^2.27.1
+  firebase_storage: ^11.6.10
+  flutter_secure_storage: ^9.0.0
 
   vector_math: any
 dev_dependencies:
