@@ -21,6 +21,9 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
     with TickerProviderStateMixin {
   late Future<ArtWork> futureArtWork;
   late ArtWork artWork = ArtWork.empty();
+  late Future<List<Order>> futureOrderList;
+  late List<Order> orderList = [];
+  bool _isOrdered = false;
 
   final double infoHeight = 364.0;
   AnimationController? animationController;
@@ -89,7 +92,24 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
     accInfoFuture.then((value) => {
           setState(() {
             accinfo = value!;
+            if(artWork.userOwnerId == accinfo.id) {
+              _isOrdered = true;
+            }
           })
+        });
+    futureOrderList = BaseClient().fetchOrders();
+    futureOrderList.then((value) => {
+          for (var item in value)
+            {
+              if (item.artWorkId == widget.artWorkId &&
+                  item.status == 1 &&
+                  item.buyerAccountId == accinfo.id)
+                {
+                  setState(() {
+                    _isOrdered = true;
+                  })
+                }
+            }
         });
   }
 
@@ -273,12 +293,13 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                     const SizedBox(
                                       width: 16,
                                     ),
+                                    if(!_isOrdered)
                                     Expanded(
                                       child: GestureDetector(
                                         onTap: () {
                                           var response = BaseClient()
                                               .createOrder(
-                                                  order: Order(
+                                                  order: OrderModel(
                                                       id: '',
                                                       created: DateTime.now(),
                                                       isDeleted: false,
@@ -287,7 +308,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                                       ownerAccountId:
                                                           artWork.userOwnerId,
                                                       artWorkId: artWork.id,
-                                                      status: 0));
+                                                      status: 1));
                                           response.then((value) => {
                                                 if (value.statusCode == 200)
                                                   {
@@ -298,7 +319,10 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                                         content: Text(
                                                             'Order artwork success'),
                                                       ),
-                                                    )
+                                                    ),
+                                                    setState(() {
+                                                      _isOrdered = true;
+                                                    })
                                                   }
                                                 else
                                                   {
@@ -334,7 +358,7 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                           ),
                                           child: const Center(
                                             child: Text(
-                                              'Buy Art Work',
+                                              'Order Art Work',
                                               textAlign: TextAlign.left,
                                               style: TextStyle(
                                                 fontWeight: FontWeight.w600,

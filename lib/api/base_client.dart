@@ -117,7 +117,7 @@ class BaseClient {
 
   //fetch api order
   Future<http.Response> createOrder({
-    required Order order
+    required OrderModel order
   }) async {
     final apiUrl = 'http://aws-prn.somee.com/api/Order/Add';
     final headers = <String, String> {
@@ -148,4 +148,17 @@ class BaseClient {
       return response;
     }
   }
+  Future<List<Order>> fetchOrders() async {
+    var response =
+    await http.get(
+        Uri.parse('http://aws-prn.somee.com/api/Order/GetAll')
+    );
+    if(response.statusCode == 200) {
+      final List result = json.decode(response.body);
+      return result.map((e) => Order.fromJson(e)).toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
 }

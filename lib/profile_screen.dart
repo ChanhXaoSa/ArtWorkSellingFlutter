@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:aws_flutter/artwork_sharing/add_new_artwork_screen.dart';
+import 'package:aws_flutter/artwork_sharing/artwork_order_history_screen.dart';
 import 'package:aws_flutter/artwork_sharing/my_artwork_screen.dart';
 import 'package:aws_flutter/login_screen.dart';
 import 'package:aws_flutter/model/login_model.dart';
@@ -117,7 +118,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
               icon: Icons.history,
               title: 'Order History',
               onTap: () {
-
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ArtworkOrderHistoryScreen(),
+                  ),
+                );
               },
             ),
 

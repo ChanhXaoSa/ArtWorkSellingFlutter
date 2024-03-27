@@ -20,7 +20,6 @@ class ArtWork {
   int price;
   String imageUrl;
   int artWorkStatus;
-  bool isPreOrder;
   List<dynamic> orders;
   List<Interact> interacts;
   dynamic wishLists;
@@ -38,7 +37,6 @@ class ArtWork {
     required this.price,
     required this.imageUrl,
     required this.artWorkStatus,
-    required this.isPreOrder,
     required this.orders,
     required this.interacts,
     required this.wishLists,
@@ -57,7 +55,6 @@ class ArtWork {
    price= 0,
    imageUrl= '',
    artWorkStatus= 0,
-   isPreOrder= false,
    orders= [],
    interacts= [],
    wishLists= [],
@@ -75,7 +72,6 @@ class ArtWork {
     price: json["price"],
     imageUrl: json["imageUrl"],
     artWorkStatus: json["artWorkStatus"],
-    isPreOrder: json["isPreOrder"],
     orders: List<dynamic>.from(json["orders"].map((x) => x)),
     interacts: List<Interact>.from(json["interacts"].map((x) => Interact.fromJson(x))),
     wishLists: json["wishLists"],
@@ -94,7 +90,6 @@ class ArtWork {
     "price": price,
     "imageUrl": imageUrl,
     "artWorkStatus": artWorkStatus,
-    "isPreOrder": isPreOrder,
     "orders": List<dynamic>.from(orders.map((x) => x)),
     "interacts": List<dynamic>.from(interacts.map((x) => x.toJson())),
     "wishLists": wishLists,
@@ -113,4 +108,78 @@ class ArtworkModel {
   double price;
 
   ArtworkModel({required this.imageUrl, required this.categoryId, required this.name, required this.description, required this.price});
+}
+
+class ArtWorkInOrderModel {
+  String userAccountId;
+  String userOwnerId;
+  String categoryId;
+  String name;
+  String description;
+  int price;
+  String imageUrl;
+  int artWorkStatus;
+  dynamic wishLists;
+  DateTime created;
+  bool isDeleted;
+  String id;
+
+  ArtWorkInOrderModel({
+    required this.userAccountId,
+    required this.userOwnerId,
+    required this.categoryId,
+    required this.name,
+    required this.description,
+    required this.price,
+    required this.imageUrl,
+    required this.artWorkStatus,
+    required this.wishLists,
+    required this.created,
+    required this.isDeleted,
+    required this.id,
+  });
+
+  ArtWorkInOrderModel.empty() :
+        userAccountId = '',
+        userOwnerId= '',
+        categoryId= '',
+        name= '',
+        description= '',
+        price= 0,
+        imageUrl= '',
+        artWorkStatus= 0,
+        wishLists= [],
+        created= DateTime.now(),
+        isDeleted= false,
+        id= '';
+
+  factory ArtWorkInOrderModel.fromJson(Map<String, dynamic> json) => ArtWorkInOrderModel(
+    userAccountId: json["userAccountId"],
+    userOwnerId: json["userOwnerId"],
+    categoryId: json["categoryId"],
+    name: json["name"],
+    description: json["description"],
+    price: json["price"],
+    imageUrl: json["imageUrl"],
+    artWorkStatus: json["artWorkStatus"],
+    wishLists: json["wishLists"],
+    created: DateTime.parse(json["created"]),
+    isDeleted: json["isDeleted"],
+    id: json["id"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "userAccountId": userAccountId,
+    "userOwnerId": userOwnerId,
+    "categoryId": categoryId,
+    "name": name,
+    "description": description,
+    "price": price,
+    "imageUrl": imageUrl,
+    "artWorkStatus": artWorkStatus,
+    "wishLists": wishLists,
+    "created": created.toIso8601String(),
+    "isDeleted": isDeleted,
+    "id": id,
+  };
 }

@@ -4,15 +4,16 @@
 
 import 'dart:convert';
 
-List<Interact> interactFromJson(String str) => List<Interact>.from(json.decode(str).map((x) => Interact.fromJson(x)));
+Interact interactFromJson(String str) => Interact.fromJson(json.decode(str));
 
-String interactToJson(List<Interact> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String interactToJson(Interact data) => json.encode(data.toJson());
 
 class Interact {
   String artWorkId;
+  String userAccountId;
+  dynamic applicationUser;
   String comment;
   bool isLike;
-  DateTime date;
   DateTime created;
   dynamic createdBy;
   dynamic lastModified;
@@ -23,9 +24,10 @@ class Interact {
 
   Interact({
     required this.artWorkId,
+    required this.userAccountId,
+    required this.applicationUser,
     required this.comment,
     required this.isLike,
-    required this.date,
     required this.created,
     required this.createdBy,
     required this.lastModified,
@@ -37,9 +39,10 @@ class Interact {
 
   factory Interact.fromJson(Map<String, dynamic> json) => Interact(
     artWorkId: json["artWorkID"],
+    userAccountId: json["userAccountId"],
+    applicationUser: json["applicationUser"],
     comment: json["comment"],
     isLike: json["isLike"],
-    date: DateTime.parse(json["date"]),
     created: DateTime.parse(json["created"]),
     createdBy: json["createdBy"],
     lastModified: json["lastModified"],
@@ -51,9 +54,10 @@ class Interact {
 
   Map<String, dynamic> toJson() => {
     "artWorkID": artWorkId,
+    "userAccountId": userAccountId,
+    "applicationUser": applicationUser,
     "comment": comment,
     "isLike": isLike,
-    "date": date.toIso8601String(),
     "created": created.toIso8601String(),
     "createdBy": createdBy,
     "lastModified": lastModified,
