@@ -101,6 +101,38 @@ class BaseClient {
     }
 }
 
+  Future<http.Response> updateOwner({
+    required String ArtworkId,
+    required String UserOwnerId,
+  }) async {
+    final apiUrl = 'http://aws-prn.somee.com/api/ArtWork/UpdateOwner';
+    final headers = <String, String> {
+      'Content-Type': 'application/json',
+    };
+
+    final ownerData = {
+      'artworkId' : ArtworkId,
+      'userOwnerId': UserOwnerId,
+    };
+
+    final response = await http.put(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(ownerData),
+    );
+
+    if (response.statusCode == 200) {
+      // Xử lý kết quả thành công
+      print('Đã update owner thành công');
+      return response;
+    } else {
+      // Xử lý lỗi hoặc trạng thái khác
+      print('Lỗi khi tạo order: ${response.statusCode}');
+      print('Nội dung lỗi: ${response.body}');
+      return response;
+    }
+  }
+
   //Fetch Api Category
   Future<List<Category>> fetchCategories() async {
     var response =
@@ -140,6 +172,45 @@ class BaseClient {
     if (response.statusCode == 200) {
       // Xử lý kết quả thành công
       print('Đã tạo order thành công');
+      return response;
+    } else {
+      // Xử lý lỗi hoặc trạng thái khác
+      print('Lỗi khi tạo order: ${response.statusCode}');
+      print('Nội dung lỗi: ${response.body}');
+      return response;
+    }
+  }
+  Future<http.Response> updateOrder({
+    required OrderModel order
+  }) async {
+    final apiUrl = 'http://aws-prn.somee.com/api/Order/Update';
+    final headers = <String, String> {
+      'Content-Type': 'application/json',
+    };
+
+    final orderData = {
+      'id' : order.id,
+      'buyerAccountId': order.buyerAccountId,
+      'ownerAccountId': order.ownerAccountId,
+      'artWorkID': order.artWorkId,
+      'status': order.status,
+    };
+
+    final response = await http.put(
+      Uri.parse(apiUrl),
+      headers: headers,
+      body: jsonEncode(orderData),
+    );
+
+    if (response.statusCode == 200) {
+      // Xử lý kết quả thành công
+      print('Đã tạo order thành công');
+      if(order.status == 2) {
+        await http.put(
+            Uri.parse('http://aws-prn.somee.com/api/Order/UpdateStatusCancel?artworkId=${order.artWorkId}')
+        );
+        updateOwner(ArtworkId: order.artWorkId, UserOwnerId: order.buyerAccountId);
+      }
       return response;
     } else {
       // Xử lý lỗi hoặc trạng thái khác

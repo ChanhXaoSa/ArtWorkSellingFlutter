@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:aws_flutter/artwork_sharing/add_new_artwork_screen.dart';
 import 'package:aws_flutter/artwork_sharing/artwork_order_history_screen.dart';
+import 'package:aws_flutter/artwork_sharing/artwork_order_request_screen.dart';
 import 'package:aws_flutter/artwork_sharing/my_artwork_screen.dart';
 import 'package:aws_flutter/login_screen.dart';
 import 'package:aws_flutter/model/login_model.dart';
@@ -122,6 +123,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ArtworkOrderHistoryScreen(),
+                  ),
+                );
+              },
+            ),
+
+            CustomListTile(
+              icon: Icons.access_time_outlined,
+              title: 'Order Request',
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ArtworkOrderRequestScreen(),
                   ),
                 );
               },
