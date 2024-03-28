@@ -13,7 +13,6 @@ class Interact {
   String userAccountId;
   dynamic applicationUser;
   String comment;
-  bool isLike;
   DateTime created;
   dynamic createdBy;
   dynamic lastModified;
@@ -27,7 +26,6 @@ class Interact {
     required this.userAccountId,
     required this.applicationUser,
     required this.comment,
-    required this.isLike,
     required this.created,
     required this.createdBy,
     required this.lastModified,
@@ -42,7 +40,6 @@ class Interact {
     userAccountId: json["userAccountId"],
     applicationUser: json["applicationUser"],
     comment: json["comment"],
-    isLike: json["isLike"],
     created: DateTime.parse(json["created"]),
     createdBy: json["createdBy"],
     lastModified: json["lastModified"],
@@ -57,7 +54,6 @@ class Interact {
     "userAccountId": userAccountId,
     "applicationUser": applicationUser,
     "comment": comment,
-    "isLike": isLike,
     "created": created.toIso8601String(),
     "createdBy": createdBy,
     "lastModified": lastModified,

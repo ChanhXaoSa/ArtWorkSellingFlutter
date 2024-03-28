@@ -81,6 +81,9 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
     futureArtWork = BaseClient().fetchArtWorkById(widget.artWorkId);
     await futureArtWork.then((value) => setState(() {
           artWork = value;
+          if(value.artWorkStatus == 2) {
+              _isOrdered = true;
+          }
         }));
     tokenFuture = getToken();
     tokenFuture.then((value) => {
@@ -371,7 +374,47 @@ class _ArtWorkInfoScreenState extends State<ArtWorkInfoScreen>
                                           ),
                                         ),
                                       ),
-                                    )
+                                    ),
+                                    if(_isOrdered)
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                          },
+                                          child: Container(
+                                            height: 48,
+                                            decoration: BoxDecoration(
+                                              color: DesignArtWorkAppTheme
+                                                  .lightText,
+                                              borderRadius:
+                                              const BorderRadius.all(
+                                                Radius.circular(16.0),
+                                              ),
+                                              boxShadow: <BoxShadow>[
+                                                BoxShadow(
+                                                    color: DesignArtWorkAppTheme
+                                                        .nearlyBrown
+                                                        .withOpacity(0.5),
+                                                    offset:
+                                                    const Offset(1.1, 1.1),
+                                                    blurRadius: 10.0),
+                                              ],
+                                            ),
+                                            child: const Center(
+                                              child: Text(
+                                                'Stop accepting orders',
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 18,
+                                                  letterSpacing: 0.0,
+                                                  color: DesignArtWorkAppTheme
+                                                      .nearlyWhite,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )
                                   ],
                                 ),
                               ),
